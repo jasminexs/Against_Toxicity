@@ -50,6 +50,7 @@ public class ChatProcessor {
     }
     private boolean checkToxic(String message) {
         String[] list = new Config().getToxicList();
+        String[] list2 = new Config().getToxicList2();
         String[] words = message.toLowerCase().split(" ");
 
         for (String s : list) {
@@ -57,6 +58,11 @@ public class ChatProcessor {
                 if (s.matches(word)) {
                     return true;
                 }
+            }
+        }
+        for (String s : list2) {
+            if (message.toLowerCase().contains(s)) {
+                return true;
             }
         }
 
