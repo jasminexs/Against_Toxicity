@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "againsttoxicity",
+  "version": "0.1-1.20.1",
+  "name": "Against Toxicity",
+  "description": "Simple, configurable, clientside chat mod that scolds anyone being toxic",
+  "authors": [
+    "epicgamerjamer"
+  ],
+  "contact": {
+    "homepage": "https://discord.gg/stqwNAezeP"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "net.epicgamerjamer.mod.againsttoxicity.client.AgainstToxicityClient"
+    ],
+    "main": [
+      "net.epicgamerjamer.mod.againsttoxicity.AgainstToxicity"
+    ]
+  },
+  "mixins": [
+    "againsttoxicity.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.22",
+    "minecraft": "1.20.1",
+    "fabric-api": "*"
+  }
+}
