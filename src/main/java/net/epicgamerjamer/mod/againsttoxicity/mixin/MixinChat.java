@@ -49,7 +49,7 @@ public class MixinChat {
                     }
                 }
                 if (message.contains("-download") && name != null) {
-                    handler.sendChatCommand("msg " + name + " Download AgainstToxicity -> github.com/epicgamerjamer/Against_Toxicity/releases");
+                    handler.sendChatCommand("msg " + name + " Download AgainstToxicity -> github.com/epicgamerjamer/Against_Toxicity/");
                 }
 
             } else  if (name != null && new ChatProcessor(message).processChat() > 0) {
