@@ -1,5 +1,6 @@
 package net.epicgamerjamer.mod.againsttoxicity.config;
 
+import net.minecraft.client.MinecraftClient;
 
 public class Config {
     private String[] AntiSlurList = {
@@ -9,17 +10,17 @@ public class Config {
             ", please find less harmful ways to express your emotions!",
             ", remember that racism and fascism go hand in hand.",
             ", be careful of who you hate, it could be someone you love.",
-            ", let's keep the conversation respectful and friendly.",
-            ", we can communicate without resorting to hurtful words.",
             ", using slurs isn't helpful or productive in any conversation.",
             ", we should aim for a positive and inclusive environment.",
             ", everyone deserves respect, regardless of our differences.",
-            ", slurs are hurtful and have no place in a supportive community.",
-            ", spread positivity and make the server a better place."
+            ", slurs are hurtful and have no place in a supportive community."
     };
 
     private String[] AntiToxicList = {
             ", why so toxic?",
+            ", let's keep the conversation respectful and friendly.",
+            ", we can communicate without resorting to hurtful words.",
+            ", spread positivity and make the server a better place.",
             ", behave yourself!",
             ", did you wake up on the wrong side of the bed?",
             ", try being nice!",
@@ -86,7 +87,9 @@ public class Config {
             "blacky",
             "blackie",
             "fucktrans",
-            "nijj"
+            "nijj",
+            "gasthe",
+            "gay"
     };
 
     private String[] ToxicList = {
@@ -151,7 +154,6 @@ public class Config {
             "fucker",
             "fucking",
             "garbage",
-            "gay",
             "ggez",
             "hoe",
             "horrible",
@@ -200,6 +202,8 @@ public class Config {
     };
     private String[] ToxicList2 = {
             "touch grass",
+            "ezzzzzz",
+            "asss",
             "go outside",
             "no name",
             "fuck up",
@@ -258,14 +262,14 @@ public class Config {
 
     };
 
-    private String[] friends = {
-            "epicgamerjamer",
+    private String[] ignoreNames = {
             "Server]",
             "Broadcast]",
             "you",
             "me",
             "You",
             "Me",
+            MinecraftClient.getInstance().player.getName().getString()
     };
 
     private String[] servers = {
@@ -294,8 +298,8 @@ public class Config {
     public String[] getToxicList2() {
         return ToxicList2;
     }
-    public String[] getFriends() {
-        return friends;
+    public String[] getIgnoreNames() {
+        return ignoreNames;
     }
     public String[] getServers() {
         return servers;

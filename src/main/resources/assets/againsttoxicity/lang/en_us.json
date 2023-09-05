@@ -1,0 +1,9 @@
+{
+  "text.autoconfig.againsttoxicity.title" : "Against Toxicity Configuration Menu",
+  "text.autoconfig.againsttoxicity.option.modEnabled" : "Mod Enabled",
+  "text.autoconfig.againsttoxicity.option.privateDefault" : "Send messages privately by default",
+  "text.autoconfig.againsttoxicity.option.servers" : "Override default /msg",
+  "text.autoconfig.againsttoxicity.option.servers.privateServers" : "Always /msg players on:",
+  "text.autoconfig.againsttoxicity.option.servers.publicServers" : "Never /msg players on:",
+  "text.autoconfig.againsttoxicity.option.friends" : "Friends list"
+}
