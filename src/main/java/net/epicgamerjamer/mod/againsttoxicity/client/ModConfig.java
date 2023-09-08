@@ -11,28 +11,25 @@ public class ModConfig implements ConfigData {
     public boolean isModEnabled() {
         return modEnabled;
     }
-
     public boolean isPrivateDefault() {
         return privateDefault;
     }
-
     public String[] getPrivateServers() {
         return servers.privateServers;
     }
-
     public String[] getPublicServers() {
         return servers.publicServers;
     }
-
     public String[] getFriends() {
         return friends;
     }
+    public boolean isDebug() {
+        return debug;
+    }
 
     boolean modEnabled = true;
+    boolean debug = false;
     boolean privateDefault = false;
-    String[] friends = {
-            "Add names to ignore here!"
-    };
     static class ServersDropdown {
         String[] privateServers = {
                 "mcpvp.club"
@@ -43,4 +40,7 @@ public class ModConfig implements ConfigData {
     }
     @ConfigEntry.Gui.CollapsibleObject
     ServersDropdown servers = new ServersDropdown();
+    String[] friends = {
+            "Add names to ignore here!"
+    };
 }

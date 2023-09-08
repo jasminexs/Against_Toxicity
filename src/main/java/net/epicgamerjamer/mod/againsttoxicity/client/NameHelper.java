@@ -9,26 +9,26 @@ import java.util.regex.Pattern;
 public class NameHelper {
     static ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
     public static String getUsername(String input) {
-        Pattern pattern = Pattern.compile("(<)?(BOOSTER |MOD |ADMIN |DEV |YOUTUBE |Stray |VIP |🌙 |✟ |⚔ |\\[)?([^>\\s:]+)");
+        Pattern pattern = Pattern.compile("(<)?(BOOSTER |MOD |ADMIN |DEV |YOUTUBE |Stray |VIP |🌙 |☽ |✟ |⚔ |⚒ |Party]|\\[)?([^>\\s:]+)");
         Matcher matcher = pattern.matcher(input);
-        boolean hasFriends = false;
+        boolean ignorePlayer = false;
         String[] ignoreNames = new Config().getIgnoreNames();
         String[] friends = config.getFriends();
 
         if (matcher.find() && matcher.group(3) != null) {
             for (String i : ignoreNames) {
-                if (i.matches(matcher.group(3))) {
-                    hasFriends = true;
+                if (i.toLowerCase().matches(matcher.group(3))) {
+                    ignorePlayer = true;
                     break;
                 }
             }
             for (String i : friends) {
                 if (i.matches(matcher.group(3))) {
-                    hasFriends = true;
+                    ignorePlayer = true;
                     break;
                 }
             }
-            if (!hasFriends) {
+            if (!ignorePlayer) {
                 return matcher.group(3);
             }
         }
