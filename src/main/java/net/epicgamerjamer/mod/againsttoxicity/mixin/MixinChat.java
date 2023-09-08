@@ -76,7 +76,7 @@ public class MixinChat {
                     if (config.isDebug()) {
                         System.out.println("[AgainstToxicity] MixinChat - -download received");
                     }
-                    handler.sendChatCommand("msg " + name + " Download AgainstToxicity -> https://www.github.com/epicgamerjamer/Against_Toxicity/");
+                    handler.sendChatCommand("msg " + name + " Download AgainstToxicity -> https://modrinth.com/mod/againsttoxicity");
                 }
 
             } else  if (name != null && new ChatProcessor(message).processChat() > 0) {
