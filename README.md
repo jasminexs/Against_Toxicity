@@ -7,7 +7,7 @@
 - Per-server overrides: `Always public` and `Always /msg` when on certain servers (configurable)
 - `!at` commands:
 > - `!at -users` notifies player in a PM you're using the mod
-> - `!at -download` sends the Github link to the player in a PM
+> - `!at -download` sends a download link to the player in a PM
 > - `!at :3` secret!! :3
 
 ![5055e51e7addc367e8c4986009faf7878f40f264](https://github.com/epicgamerjamer/Against_Toxicity/assets/101027811/e06e10c1-0375-4df3-8e1f-7a140c388585)
