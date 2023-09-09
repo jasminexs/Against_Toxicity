@@ -24,9 +24,8 @@ public class MixinChat {
 
     public void onGameMessage(Text m, CallbackInfo ci) {
         if (config.isModEnabled()) {
-            if (config.isDebug()) {
+            if (config.isDebug())
                 System.out.println("[AgainstToxicity] MixinChat - Game message received, processing...");
-            }
             String message = m.getString();
             String name = NameHelper.getUsername(message);
 
@@ -37,69 +36,44 @@ public class MixinChat {
 
             if (message.contains("!at ")) {
                 // Higher priority than checking for toxicity - responds based on the sender of the "command"
-                if (config.isDebug()) {
-                    System.out.println("[AgainstToxicity] MixinChat - Command received");
-                }
+                if (config.isDebug()) System.out.println("[AgainstToxicity] MixinChat - Command received");
                 if (message.contains(":3") && name != null) {
-                    if (config.isDebug()) {
-                        System.out.println("[AgainstToxicity] MixinChat - :3 received");
-                    }
+                    if (config.isDebug()) System.out.println("[AgainstToxicity] MixinChat - :3 received");
                     if (name.matches("epicgamerjamer")) {
-                        if (config.isDebug()) {
-                            System.out.println("[AgainstToxicity] MixinChat - :3 public");
-                        }
+                        if (config.isDebug()) System.out.println("[AgainstToxicity] MixinChat - :3 public");
                         handler.sendChatMessage("I support trans rights! :3");
                     } else {
-                        if (config.isDebug()) {
-                            System.out.println("[AgainstToxicity] MixinChat - :3 private");
-                        }
+                        if (config.isDebug()) System.out.println("[AgainstToxicity] MixinChat - :3 private");
                         handler.sendCommand("msg " + name + " I support trans rights! :3");
                     }
                 }
                 if (message.contains("-users") && name != null) {
-                    if (config.isDebug()) {
-                        System.out.println("[AgainstToxicity] MixinChat - -users received");
-                    }
+                    if (config.isDebug()) System.out.println("[AgainstToxicity] MixinChat - -users received");
                     if (name.matches("epicgamerjamer")) {
-                        if (config.isDebug()) {
-                            System.out.println("[AgainstToxicity] MixinChat - -users public");
-                        }
+                        if (config.isDebug()) System.out.println("[AgainstToxicity] MixinChat - -users public");
                         handler.sendChatMessage("I am using AgainstToxicity.");
                     } else {
-                        if (config.isDebug()) {
-                            System.out.println("[AgainstToxicity] MixinChat - -users private");
-                        }
+                        if (config.isDebug()) System.out.println("[AgainstToxicity] MixinChat - -users private");
                         handler.sendCommand("msg " + name + " I am using AgainstToxicity.");
                     }
                 }
                 if (message.contains("-download") && name != null) {
-                    if (config.isDebug()) {
-                        System.out.println("[AgainstToxicity] MixinChat - -download received");
-                    }
+                    if (config.isDebug()) System.out.println("[AgainstToxicity] MixinChat - -download received");
                     handler.sendChatCommand("msg " + name + " Download AgainstToxicity -> https://modrinth.com/mod/againsttoxicity");
                 }
 
             } else  if (name != null && new ChatProcessor(message).processChat() > 0) {
-                if (config.isDebug()) {
-                    System.out.println("[AgainstToxicity] MixinChat - Received toxic message");
-                }
+                if (config.isDebug()) System.out.println("[AgainstToxicity] MixinChat - Received toxic message");
                 if ((new ChatProcessor((message)).isPrivate())) {
                     // Privately message players if certain conditions are met
-                    if (config.isDebug()) {
-                        System.out.println("[AgainstToxicity] MixinChat - Sending private message");
-                    }
+                    if (config.isDebug()) System.out.println("[AgainstToxicity] MixinChat - Sending private message");
                     handler.sendChatCommand(new TextBuilder(name, new ChatProcessor(message).processChat(), true).toString());
-                }
-                else {
+                } else {
                     // Otherwise say publicly
-                    if (config.isDebug()) {
-                        System.out.println("[AgainstToxicity] MixinChat - Sending public message");
-                    }
+                    if (config.isDebug()) System.out.println("[AgainstToxicity] MixinChat - Sending public message");
                     handler.sendChatMessage(new TextBuilder(name, new ChatProcessor(message).processChat(), false).toString());
                 }
             }
-        } else if (config.isDebug()) {
-            System.out.println("[AgainstToxicity] MixinChat - Mod is disabled");
-        }
+        } else if (config.isDebug()) System.out.println("[AgainstToxicity] MixinChat - Mod is disabled");
     }
 }

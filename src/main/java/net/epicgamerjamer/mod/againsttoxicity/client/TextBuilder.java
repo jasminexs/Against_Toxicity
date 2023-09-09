@@ -1,7 +1,5 @@
 package net.epicgamerjamer.mod.againsttoxicity.client;
 
-import net.epicgamerjamer.mod.againsttoxicity.config.Config;
-
 public class TextBuilder {
     private final String name;
     private final String response;
@@ -11,9 +9,9 @@ public class TextBuilder {
         name = n;
         priv = p;
         if (l == 1) {
-            response = new Config().getAntiToxicList()[(int)(Math.random()*(new Config().getAntiToxicList().length))];
+            response = new Lists().getAntiToxicList()[(int)(Math.random()*(new Lists().getAntiToxicList().length))];
         } else if (l == 2) {
-            response = new Config().getAntiSlurList()[(int)(Math.random()*(new Config().getAntiSlurList().length))];
+            response = new Lists().getAntiSlurList()[(int)(Math.random()*(new Lists().getAntiSlurList().length))];
         } else {
             response = null;
         }

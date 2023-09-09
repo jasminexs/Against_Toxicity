@@ -1,7 +1,6 @@
 package net.epicgamerjamer.mod.againsttoxicity.client;
 
 import me.shedaniel.autoconfig.AutoConfig;
-import net.epicgamerjamer.mod.againsttoxicity.config.Config;
 import net.minecraft.client.MinecraftClient;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Unique;
@@ -13,8 +12,10 @@ import java.util.regex.Pattern;
 public class ChatProcessor {
     @Unique
     ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
-    private final String msg;
+    public String msg;
+    public String name;
     String address = (Objects.requireNonNull((Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler())).getServerInfo()).address);
+
     public ChatProcessor(@NotNull String m) {
         msg = m.replace("\\", "")
                 .replace("/", "")
@@ -24,8 +25,6 @@ public class ChatProcessor {
                 .replace("}", "")
                 .replace("(", "")
                 .replace(")", "")
-                .replace("<", "")
-                .replace(">", "")
                 .replace("?", "")
                 .replace("!", "")
                 .replace("*", "")
@@ -36,15 +35,16 @@ public class ChatProcessor {
                 .replace("\"", "")
                 .replace("|", "")
                 .replace("@", "")
-                .replace("-", "")
                 .replace(",", "")
                 .replace(".", "")
-                .toLowerCase()
-        ;
+                .toLowerCase();
+        name = NameHelper.getUsername(m);
+        if (config.isDebug()) System.out.println("[AgainstToxicity] ChatProcessor - \"msg\" = " + msg);
+        if (config.isDebug()) System.out.println("[AgainstToxicity] ChatProcessor - \"name\" = " + name);
     } // Constructor; also removes characters that screw up the ChatProcessor
     public int processChat() {
-        for (int i = 0; i < new Config().getIgnore().length; i++) {
-            if (msg.contains(new Config().getIgnore()[i])) {
+        for (int i = 0; i < new Lists().getIgnore().length; i++) {
+            if (msg.contains(new Lists().getIgnore()[i])) {
                 return 0;
             }
         }
@@ -66,17 +66,18 @@ public class ChatProcessor {
                 }
             }
         } // true if server is in private overrides
-        if (msg.contains("->")) {
-            String[] list = {
-                    "-> you",
-                    "-> me"
-            };
-            for (String s:list) {
-                if (msg.toLowerCase().contains(s)) {
-                    return true;
-                }
+
+        String[] pmList = {
+                "-> you",
+                "-> me",
+                "<--"
+        };
+        for (String s : pmList) {
+            if (msg.toLowerCase().contains(s)) {
+                return true;
             }
-        } // true if toxic message is determined to be a pm
+        }
+        // true if toxic message is determined to be a pm
         if (config.isPrivateDefault()) {
             String[] list = config.getPublicServers();
             for (String s : list) {
@@ -90,8 +91,8 @@ public class ChatProcessor {
         return false; // false if none of the conditions are met (shouldn't occur but just in case)
     } // Checks certain conditions to determine whether to send the message privately or publicly
     private boolean checkToxic() {
-        String[] list = new Config().getToxicList(); // Single words; prevents false positives ("assist" flagged by "ass")
-        String[] list2 = new Config().getToxicList2(); // Phrases; doesn't flag without space ("urbad" = false, "ur bad" = true)
+        String[] list = new Lists().getToxicList(); // Single words; prevents false positives ("assist" flagged by "ass")
+        String[] list2 = new Lists().getToxicList2(); // Phrases; doesn't flag without space ("urbad" = false, "ur bad" = true)
         String[] words = msg.toLowerCase().split(" "); // Converts message to array of lowercase strings
 
         // Matches whole words online
@@ -113,8 +114,8 @@ public class ChatProcessor {
         return false;
     } // Return true if the 1+ word(s) matches an entry in list, OR true if the message contains any phrase in list2
     private boolean checkSlurs() {
-        Pattern regex = Pattern.compile(String.join("|", new Config().getSlurList()), Pattern.CASE_INSENSITIVE);
-        Matcher matcher = regex.matcher(String.join("", msg.split(" ")));
+        Pattern regex = Pattern.compile(String.join("|", new Lists().getSlurList()), Pattern.CASE_INSENSITIVE);
+        Matcher matcher = regex.matcher(msg.replace(" ", "").replace(name.toLowerCase(), ""));
 
         return matcher.find();
     } // Return true if the chat message has a slur, ignores spaces (VERY sensitive)
