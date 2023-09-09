@@ -14,7 +14,7 @@ public class ChatProcessor {
     ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
     public String msg;
     public String name;
-    String address = (Objects.requireNonNull((Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler())).getServerInfo()).address);
+    String address = Objects.requireNonNull(MinecraftClient.getInstance().getCurrentServerEntry()).address;
 
     public ChatProcessor(@NotNull String m) {
         msg = m.replace("\\", "")
