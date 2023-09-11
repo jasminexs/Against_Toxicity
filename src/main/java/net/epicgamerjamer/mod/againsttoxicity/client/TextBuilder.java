@@ -9,9 +9,9 @@ public class TextBuilder {
         name = n;
         priv = p;
         if (l == 1) {
-            response = new Lists().getAntiToxicList()[(int)(Math.random()*(new Lists().getAntiToxicList().length))];
+            response = new Lists().getAntiToxicList()[(int) (Math.random() * (new Lists().getAntiToxicList().length))];
         } else if (l == 2) {
-            response = new Lists().getAntiSlurList()[(int)(Math.random()*(new Lists().getAntiSlurList().length))];
+            response = new Lists().getAntiSlurList()[(int) (Math.random() * (new Lists().getAntiSlurList().length))];
         } else {
             response = null;
         }

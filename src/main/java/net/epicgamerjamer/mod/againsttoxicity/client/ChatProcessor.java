@@ -14,7 +14,8 @@ public class ChatProcessor {
     ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
     public String msg;
     public String name;
-    String address = Objects.requireNonNull(MinecraftClient.getInstance().getCurrentServerEntry()).address;
+    public String address;
+    public boolean isSingleplayer;
 
     public ChatProcessor(@NotNull String m) {
         msg = m.replace("\\", "")
@@ -37,18 +38,16 @@ public class ChatProcessor {
                 .replace("@", "")
                 .replace(",", "")
                 .replace(".", "")
+                .replace("$", "")
                 .toLowerCase();
         name = NameHelper.getUsername(m);
+        isSingleplayer = MinecraftClient.getInstance().isInSingleplayer();
         if (config.isDebug()) System.out.println("[AgainstToxicity] ChatProcessor - \"msg\" = " + msg);
         if (config.isDebug()) System.out.println("[AgainstToxicity] ChatProcessor - \"name\" = " + name);
+        if (!isSingleplayer) address = (Objects.requireNonNull((Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler())).getServerInfo()).address);
+        else address = "singeplayer";
     } // Constructor; also removes characters that screw up the ChatProcessor
     public int processChat() {
-        for (int i = 0; i < new Lists().getIgnore().length; i++) {
-            if (msg.contains(new Lists().getIgnore()[i])) {
-                return 0;
-            }
-        }
-
         if (checkSlurs()) {
             return 2;
         } else if (checkToxic()) {
@@ -93,16 +92,17 @@ public class ChatProcessor {
     private boolean checkToxic() {
         String[] list = new Lists().getToxicList(); // Single words; prevents false positives ("assist" flagged by "ass")
         String[] list2 = new Lists().getToxicList2(); // Phrases; doesn't flag without space ("urbad" = false, "ur bad" = true)
+        if (msg.contains(" was blown up by ")) msg = msg.substring(msg.indexOf("was blown"));
+        if (msg.contains(" was slain by ")) msg = msg.substring(msg.indexOf("was slain"));
         String[] words = msg.toLowerCase().split(" "); // Converts message to array of lowercase strings
 
-        // Matches whole words online
         for (String s : list) {
             for (String word : words) {
                 if (s.matches(word)) {
                     return true;
                 }
             }
-        }
+        } // Matches whole words only
 
         // Matches phrases, must include spaces
         for (String s : list2) {
