@@ -1,6 +1,9 @@
 package net.epicgamerjamer.mod.againsttoxicity.client;
 
+import java.util.Random;
+
 public class TextBuilder {
+    private static final Random RANDOM = new Random();
     private final String name;
     private final String response;
     private final boolean priv;
@@ -9,9 +12,9 @@ public class TextBuilder {
         name = n;
         priv = p;
         if (l == 1) {
-            response = new Lists().getAntiToxicList()[(int) (Math.random() * (new Lists().getAntiToxicList().length))];
+            response = Lists.AntiToxicList[RANDOM.nextInt(Lists.AntiToxicList.length)];
         } else if (l == 2) {
-            response = new Lists().getAntiSlurList()[(int) (Math.random() * (new Lists().getAntiSlurList().length))];
+            response = Lists.AntiSlurList[RANDOM.nextInt(Lists.AntiSlurList.length)];
         } else {
             response = null;
         }

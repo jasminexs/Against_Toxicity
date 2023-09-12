@@ -3,7 +3,7 @@ package net.epicgamerjamer.mod.againsttoxicity.client;
 import net.minecraft.client.MinecraftClient;
 
 public class Lists {
-    private String[] AntiSlurList = {
+    public static final String[] AntiSlurList = {
             ", be careful of who you hate, it could be someone you love.",
             ", everyone deserves respect, regardless of our differences.",
             ", hurtful slurs have no place in a respectful dialogue.",
@@ -25,7 +25,7 @@ public class Lists {
             ", we should all strive to communicate without resorting to slurs.",
     };
 
-    private String[] AntiToxicList = {
+    public static final String[] AntiToxicList = {
             ", why so toxic?",
             ", let's ensure the conversation remains respectful and friendly.",
             ", let's aim for communication without resorting to hurtful words.",
@@ -60,7 +60,7 @@ public class Lists {
             ", remember, our words shape the world we live in; let's make it a better place."
     };
 
-    private String[] SlurList = {
+    public static final String[] SlurList = {
             "autis",
             "beaner",
             "blackie",
@@ -99,7 +99,7 @@ public class Lists {
             "trany",
     };
 
-    private String[] ToxicList = {
+    public static final String[] ToxicList = {
             "abuse",
             "abuser",
             "abusing",
@@ -225,7 +225,7 @@ public class Lists {
             "wise",
             "worst",
     };
-    private String[] ToxicList2 = {
+    public static final String[] ToxicList2 = {
             "all shit",
             "asss",
             "blud cant",
@@ -294,7 +294,7 @@ public class Lists {
             "you only",
     };
 
-    private String[] ignoreNames = {
+    public static final String[] ignoreNames = {
             "server]",
             "broadcast]",
             "you",
@@ -302,22 +302,4 @@ public class Lists {
             "--",
             MinecraftClient.getInstance().player.getName().getString()
     };
-    public String[] getAntiSlurList() {
-        return AntiSlurList;
-    }
-    public String[] getAntiToxicList() {
-        return AntiToxicList;
-    }
-    public String[] getSlurList() {
-        return SlurList;
-    }
-    public String[] getToxicList() {
-        return ToxicList;
-    }
-    public String[] getToxicList2() {
-        return ToxicList2;
-    }
-    public String[] getIgnoreNames() {
-        return ignoreNames;
-    }
 }
