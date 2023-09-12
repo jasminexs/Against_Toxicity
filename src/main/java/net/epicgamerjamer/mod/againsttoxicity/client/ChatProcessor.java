@@ -90,8 +90,8 @@ public class ChatProcessor {
         return false; // false if none of the conditions are met (shouldn't occur but just in case)
     } // Checks certain conditions to determine whether to send the message privately or publicly
     private boolean checkToxic() {
-        String[] list = new Lists().getToxicList(); // Single words; prevents false positives ("assist" flagged by "ass")
-        String[] list2 = new Lists().getToxicList2(); // Phrases; doesn't flag without space ("urbad" = false, "ur bad" = true)
+        String[] list = Lists.ToxicList; // Single words; prevents false positives ("assist" flagged by "ass")
+        String[] list2 = Lists.ToxicList2; // Phrases; doesn't flag without space ("urbad" = false, "ur bad" = true)
         if (msg.contains(" was blown up by ")) msg = msg.substring(msg.indexOf("was blown"));
         if (msg.contains(" was slain by ")) msg = msg.substring(msg.indexOf("was slain"));
         String[] words = msg.toLowerCase().split(" "); // Converts message to array of lowercase strings
@@ -114,7 +114,7 @@ public class ChatProcessor {
         return false;
     } // Return true if the 1+ word(s) matches an entry in list, OR true if the message contains any phrase in list2
     private boolean checkSlurs() {
-        Pattern regex = Pattern.compile(String.join("|", new Lists().getSlurList()), Pattern.CASE_INSENSITIVE);
+        Pattern regex = Pattern.compile(String.join("|", Lists.SlurList), Pattern.CASE_INSENSITIVE);
         Matcher matcher = regex.matcher(msg.replace(" ", "").replace(name.toLowerCase(), ""));
 
         return matcher.find();

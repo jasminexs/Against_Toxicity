@@ -11,7 +11,7 @@ public class NameHelper {
         Pattern pattern1 = Pattern.compile("(<)?(BOOSTER |MOD |ADMIN |DEV |YOUTUBE |Stray |VIP|<-- |🌙 |☽ |❤ |⚡ |☠ |✟ |⚔ |⚒ |☀ |Party]|\\[)?([^>\\s:]+)");
         Matcher matcher1 = pattern1.matcher(input);
         boolean ignorePlayer = false;
-        String[] ignoreNames = new Lists().getIgnoreNames();
+        String[] ignoreNames = Lists.ignoreNames;
         String[] friends = config.getFriends();
 
         if (input.contains("was blown up by")) {
