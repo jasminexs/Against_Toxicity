@@ -1,9 +1,9 @@
 package net.epicgamerjamer.mod.againsttoxicity.client;
 
 import net.minecraft.client.MinecraftClient;
-
+// Thanks to Crosby/RacoonDog for making Lists static
 public class Lists {
-    private String[] AntiSlurList = {
+    public static final String[] AntiSlurList = {
             ", be careful of who you hate, it could be someone you love.",
             ", everyone deserves respect, regardless of our differences.",
             ", hurtful slurs have no place in a respectful dialogue.",
@@ -25,7 +25,7 @@ public class Lists {
             ", we should all strive to communicate without resorting to slurs.",
     };
 
-    private String[] AntiToxicList = {
+    public static final String[] AntiToxicList = {
             ", why so toxic?",
             ", let's ensure the conversation remains respectful and friendly.",
             ", let's aim for communication without resorting to hurtful words.",
@@ -60,7 +60,7 @@ public class Lists {
             ", remember, our words shape the world we live in; let's make it a better place."
     };
 
-    private String[] SlurList = {
+    public static final String[] SlurList = {
             "autis",
             "beaner",
             "blackie",
@@ -85,7 +85,6 @@ public class Lists {
             "n1g",
             "negro",
             "negg",
-            "ngga",
             "ngger",
             "nibb",
             "niga",
@@ -99,7 +98,7 @@ public class Lists {
             "trany",
     };
 
-    private String[] ToxicList = {
+    public static final String[] ToxicList = {
             "abuse",
             "abuser",
             "abusing",
@@ -164,15 +163,18 @@ public class Lists {
             "kiddo",
             "kys",
             "l",
+            "lagger",
             "ll",
             "lll",
             "loser",
             "luck",
             "lucky",
+            "mf",
             "monkey",
             "montage",
             "moron",
             "newgen",
+            "ngga",
             "nn",
             "noname",
             "noob",
@@ -183,33 +185,23 @@ public class Lists {
             "owned",
             "owning",
             "pedo",
+            "pinger",
             "puss",
             "pussy",
             "pusy",
             "queer",
-            "rando",
-            "random",
-            "rape",
-            "raped",
-            "raping",
             "rider",
             "riding",
             "rolled",
             "run",
             "runner",
             "running",
-            "scared",
-            "shitbox",
-            "shitcan",
-            "shitter",
+            "shut",
             "slut",
             "smd",
             "spammer",
             "spamming",
             "sped",
-            "stfu",
-            "sthu",
-            "stupid",
             "sucks",
             "swat",
             "swatted",
@@ -222,10 +214,21 @@ public class Lists {
             "ugly",
             "unloved",
             "weirdo",
+            "wierdo",
             "wise",
             "worst",
     };
-    private String[] ToxicList2 = {
+    public static final String[] ToxicList2 = {
+            "random",
+            "rape",
+            "raping",
+            "scared",
+            "shitbox",
+            "shitcan",
+            "shitter",
+            "stfu",
+            "sthu",
+            "stupid",
             "all shit",
             "asss",
             "blud cant",
@@ -235,12 +238,12 @@ public class Lists {
             "bro has",
             "bro only",
             "dog shit",
-            "end your life",
+            "end ur life",
+            "ezez",
             "ezzzz",
             "fuck the",
             "fuck off",
             "fuck u",
-            "fuck you",
             "get better",
             "get good",
             "go back to",
@@ -251,8 +254,10 @@ public class Lists {
             "is shit",
             "is wild",
             "kill ur",
-            "kill your",
-            "llll",
+            "k ys",
+            "k y s",
+            "ky s",
+            " llll",
             "lil bro",
             "low iq",
             "need to die",
@@ -269,7 +274,6 @@ public class Lists {
             "piss off",
             "prac main",
             "roll u",
-            "roll you",
             "shit box",
             "shit can",
             "shit on",
@@ -279,6 +283,7 @@ public class Lists {
             "so bad",
             "so shit",
             "so weird",
+            "so wierd",
             "still losing",
             "touch grass",
             "u bad",
@@ -288,13 +293,12 @@ public class Lists {
             "ur bad",
             "ur dog",
             "ur shit",
-            "who are",
             "who r",
             "who tf",
-            "you only",
+            "u only",
     };
 
-    private String[] ignoreNames = {
+    public static final String[] IgnoreNames = {
             "server]",
             "broadcast]",
             "you",
@@ -302,22 +306,4 @@ public class Lists {
             "--",
             MinecraftClient.getInstance().player.getName().getString()
     };
-    public String[] getAntiSlurList() {
-        return AntiSlurList;
-    }
-    public String[] getAntiToxicList() {
-        return AntiToxicList;
-    }
-    public String[] getSlurList() {
-        return SlurList;
-    }
-    public String[] getToxicList() {
-        return ToxicList;
-    }
-    public String[] getToxicList2() {
-        return ToxicList2;
-    }
-    public String[] getIgnoreNames() {
-        return ignoreNames;
-    }
 }
