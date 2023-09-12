@@ -51,7 +51,7 @@ public class MixinChat {
                     if (config.isDebug()) System.out.println("[AgainstToxicity] MixinChat - -users received");
                     if (name.matches("epicgamerjamer")) {
                         if (config.isDebug()) System.out.println("[AgainstToxicity] MixinChat - -users public");
-                        handler.sendChatMessage("I am using AgainstToxicity v1.3.2 for 1.20.1. Debug = " + config.isDebug());
+                        handler.sendChatMessage("I am using AgainstToxicity v1.3.3 for 1.20.1. Debug = " + config.isDebug());
                     } else {
                         if (config.isDebug()) System.out.println("[AgainstToxicity] MixinChat - -users private");
                         handler.sendCommand("msg " + name + " I am using AgainstToxicity.");
