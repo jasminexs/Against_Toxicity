@@ -7,23 +7,26 @@ import java.util.regex.Pattern;
 
 public class NameHelper {
     static ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+
+    //    Thanks to Crosby/RacoonDog for optimizing regex
+    private static final Pattern prefixes = Pattern.compile("(<)?(BOOSTER |MOD |ADMIN |DEV |YOUTUBE |Stray |VIP|<-- |🌙 |☽ |❤ |⚡ |☠ |✟ |⚔ |⚒ |☀ |⭐ |Party]|\\[)?([^>\\s:]+)");
+    private static final Pattern blownup = Pattern.compile("was blown up by (\\w+)");
+    private static final Pattern slain = Pattern.compile("was slain by (\\w+)");
+
     public static String getUsername(String input) {
-        Pattern pattern1 = Pattern.compile("(<)?(BOOSTER |MOD |ADMIN |DEV |YOUTUBE |Stray |VIP|<-- |🌙 |☽ |❤ |⚡ |☠ |✟ |⚔ |⚒ |☀ |Party]|\\[)?([^>\\s:]+)");
-        Matcher matcher1 = pattern1.matcher(input);
+        Matcher matcher1 = prefixes.matcher(input);
         boolean ignorePlayer = false;
-        String[] ignoreNames = new Lists().getIgnoreNames();
+        String[] ignoreNames = Lists.IgnoreNames;
         String[] friends = config.getFriends();
 
         if (input.contains("was blown up by")) {
-            Pattern pattern2 = Pattern.compile("was blown up by (\\w+)");
-            Matcher matcher2 = pattern2.matcher(input.substring(input.indexOf(" was ")));
+            Matcher matcher2 = blownup.matcher(input.substring(input.indexOf(" was ")));
             if (config.isDebug()) System.out.println("[AgainstToxicity] NameHelper - player was blown up");
             if (matcher2.find()) return matcher2.group(1);
         }
 
         if (input.contains("was slain by")) {
-            Pattern pattern3 = Pattern.compile("was slain by (\\w+)");
-            Matcher matcher3 = pattern3.matcher(input.substring(input.indexOf(" was ")));
+            Matcher matcher3 = slain.matcher(input.substring(input.indexOf(" was ")));
             if (config.isDebug()) System.out.println("[AgainstToxicity] NameHelper - player was slain");
             if (matcher3.find()) return matcher3.group(1);
         }
