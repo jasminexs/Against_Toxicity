@@ -1,12 +1,9 @@
 package net.epicgamerjamer.mod.againsttoxicity.client;
 
-import me.shedaniel.autoconfig.AutoConfig;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class NameHelper {
-    static ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
     //    Thanks to Crosby/RacoonDog for optimizing regex
     private static final Pattern prefixes = Pattern.compile("(<)?(BOOSTER |MOD |ADMIN |DEV |YOUTUBE |Stray |VIP|<-- |🌙 |☽ |❤ |⚡ |☠ |✟ |⚔ |⚒ |☀ |⭐ |Party]|\\[)?([^>\\s:]+)");
@@ -17,17 +14,17 @@ public class NameHelper {
         Matcher matcher1 = prefixes.matcher(input);
         boolean ignorePlayer = false;
         String[] ignoreNames = Lists.IgnoreNames;
-        String[] friends = config.getFriends();
+        String[] friends = ModConfig.friends;
 
         if (input.contains("was blown up by")) {
             Matcher matcher2 = blownup.matcher(input.substring(input.indexOf(" was ")));
-            if (config.isDebug()) System.out.println("[AgainstToxicity] NameHelper - player was blown up");
+            if (ModConfig.debug) System.out.println("[AgainstToxicity] NameHelper - player was blown up");
             if (matcher2.find()) return matcher2.group(1);
         }
 
         if (input.contains("was slain by")) {
             Matcher matcher3 = slain.matcher(input.substring(input.indexOf(" was ")));
-            if (config.isDebug()) System.out.println("[AgainstToxicity] NameHelper - player was slain");
+            if (ModConfig.debug) System.out.println("[AgainstToxicity] NameHelper - player was slain");
             if (matcher3.find()) return matcher3.group(1);
         }
 
