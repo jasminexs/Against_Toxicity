@@ -7,40 +7,21 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 @Config.Gui.Background("againsttoxicity:textures/background.png")
 @Config(name = "againsttoxicity")
 public class ModConfig implements ConfigData {
-
-    public boolean isModEnabled() {
-        return modEnabled;
-    }
-    public boolean isPrivateDefault() {
-        return privateDefault;
-    }
-    public String[] getPrivateServers() {
-        return servers.privateServers;
-    }
-    public String[] getPublicServers() {
-        return servers.publicServers;
-    }
-    public String[] getFriends() {
-        return friends;
-    }
-    public boolean isDebug() {
-        return debug;
-    }
-
-    boolean modEnabled = true;
-    boolean debug = false;
-    boolean privateDefault = false;
-    static class ServersDropdown {
-        String[] privateServers = {
-                "mcpvp.club"
-        };
-        String[] publicServers = {
-
-        };
-    }
+    public static final boolean modEnabled = true;
+    public static final boolean debug = false;
+    public static final boolean privateDefault = false;
     @ConfigEntry.Gui.CollapsibleObject
-    ServersDropdown servers = new ServersDropdown();
-    String[] friends = {
+    public static final ServersDropdown servers = new ServersDropdown();
+    public static final String[] friends = {
             "Add names to ignore here!"
     };
+
+    static class ServersDropdown {
+        public static final String[] privateServers = {
+                "mcpvp.club"
+        };
+        public static final String[] publicServers = {
+
+        };
+    }
 }
