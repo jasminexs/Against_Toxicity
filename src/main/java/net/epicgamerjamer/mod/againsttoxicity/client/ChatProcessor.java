@@ -1,17 +1,13 @@
 package net.epicgamerjamer.mod.againsttoxicity.client;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.MinecraftClient;
 import org.jetbrains.annotations.NotNull;
-import org.spongepowered.asm.mixin.Unique;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChatProcessor {
-    @Unique
-    ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
     public String msg;
     public String name;
     public String address;
@@ -45,9 +41,10 @@ public class ChatProcessor {
                 .toLowerCase();
         name = NameHelper.getUsername(m);
         isSingleplayer = MinecraftClient.getInstance().isInSingleplayer();
-        if (config.isDebug()) System.out.println("[AgainstToxicity] ChatProcessor - \"msg\" = " + msg);
-        if (config.isDebug()) System.out.println("[AgainstToxicity] ChatProcessor - \"name\" = " + name);
-        if (!isSingleplayer) address = (Objects.requireNonNull((Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler())).getServerInfo()).address);
+        if (ModConfig.debug) System.out.println("[AgainstToxicity] ChatProcessor - \"msg\" = " + msg);
+        if (ModConfig.debug) System.out.println("[AgainstToxicity] ChatProcessor - \"name\" = " + name);
+        if (!isSingleplayer)
+            address = (Objects.requireNonNull((Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler())).getServerInfo()).address);
         else address = "singeplayer";
     } // Constructor; also removes characters that screw up the ChatProcessor
     public int processChat() {
@@ -60,8 +57,8 @@ public class ChatProcessor {
         }
     } // Determines the toxicity level of a message; 2 means it has slurs, 1 means its toxic but no slurs, 0 means not toxic
     public boolean isPrivate() {
-        if (!config.isPrivateDefault()) {
-            String[] list = config.getPrivateServers();
+        if (!ModConfig.privateDefault) {
+            String[] list = ModConfig.ServersDropdown.privateServers;
             for (String s : list) {
                 if (address.contains(s)) {
                     return true;
@@ -80,8 +77,8 @@ public class ChatProcessor {
             }
         }
         // true if toxic message is determined to be a pm
-        if (config.isPrivateDefault()) {
-            String[] list = config.getPublicServers();
+        if (ModConfig.privateDefault) {
+            String[] list = ModConfig.ServersDropdown.publicServers;
             for (String s : list) {
                 if (address.contains(s)) {
                     return false;
