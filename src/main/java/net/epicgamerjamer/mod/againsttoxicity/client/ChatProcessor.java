@@ -7,6 +7,8 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static net.epicgamerjamer.mod.againsttoxicity.client.AgainstToxicityClient.LOGGER;
+
 public class ChatProcessor {
     public String msg;
     public String name;
@@ -14,7 +16,7 @@ public class ChatProcessor {
     public boolean isSingleplayer;
 
     public ChatProcessor(@NotNull String m) {
-        msg = m.replace("\\", "")
+        this.msg = m.replace("\\", "")
                 .replace("/", "")
                 .replace("[", "")
                 .replace("]", "")
@@ -39,13 +41,13 @@ public class ChatProcessor {
                 .replace(" you", " u")
                 .replace(" are", " r")
                 .toLowerCase();
-        name = NameHelper.getUsername(m);
-        isSingleplayer = MinecraftClient.getInstance().isInSingleplayer();
-        if (ModConfig.debug) System.out.println("[AgainstToxicity] ChatProcessor - \"msg\" = " + msg);
-        if (ModConfig.debug) System.out.println("[AgainstToxicity] ChatProcessor - \"name\" = " + name);
+        this.name = NameHelper.getUsername(m);
+        this.isSingleplayer = MinecraftClient.getInstance().isInSingleplayer();
+        if (ModConfig.debug) LOGGER.info("ChatProcessor - \"msg\" = " + msg);
+        if (ModConfig.debug) LOGGER.info("ChatProcessor - \"name\" = " + name);
         if (!isSingleplayer)
-            address = (Objects.requireNonNull((Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler())).getServerInfo()).address);
-        else address = "singeplayer";
+            this.address = (Objects.requireNonNull((Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler())).getServerInfo()).address);
+        else this.address = "singeplayer";
     } // Constructor; also removes characters that screw up the ChatProcessor
     public int processChat() {
         if (checkSlurs()) {

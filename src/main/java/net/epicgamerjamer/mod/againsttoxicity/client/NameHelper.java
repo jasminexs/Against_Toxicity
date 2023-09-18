@@ -4,8 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class NameHelper {
-
-    //    Thanks to Crosby/RacoonDog for optimizing regex
+    //  Thanks to Crosby/RacoonDog for optimizing regex
     private static final Pattern prefixes = Pattern.compile("(<)?(BOOSTER |MOD |ADMIN |DEV |YOUTUBE |Stray |VIP|<-- |🌙 |☽ |❤ |⚡ |☠ |✟ |⚔ |⚒ |☀ |⭐ |Party]|\\[)?([^>\\s:]+)");
     private static final Pattern blownup = Pattern.compile("was blown up by (\\w+)");
     private static final Pattern slain = Pattern.compile("was slain by (\\w+)");
@@ -18,13 +17,13 @@ public class NameHelper {
 
         if (input.contains("was blown up by")) {
             Matcher matcher2 = blownup.matcher(input.substring(input.indexOf(" was ")));
-            if (ModConfig.debug) System.out.println("[AgainstToxicity] NameHelper - player was blown up");
+            DebugLogger.debug("NameHelper - player was blown up");
             if (matcher2.find()) return matcher2.group(1);
         }
 
         if (input.contains("was slain by")) {
             Matcher matcher3 = slain.matcher(input.substring(input.indexOf(" was ")));
-            if (ModConfig.debug) System.out.println("[AgainstToxicity] NameHelper - player was slain");
+            DebugLogger.debug("NameHelper - player was slain");
             if (matcher3.find()) return matcher3.group(1);
         }
 

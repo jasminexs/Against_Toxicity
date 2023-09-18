@@ -6,26 +6,26 @@ public class TextBuilder {
     private static final Random random = new Random();
     private final String name;
     private final String response;
-    private final boolean priv;
+    private final boolean previous;
 
-    public TextBuilder(String n, int l, boolean p) {
-        name = n;
-        priv = p;
+    public TextBuilder(String name, int l, boolean previous) {
+        this.name = name;
+        this.previous = previous;
         if (l == 1) {
-            response = Lists.AntiToxicList[random.nextInt(Lists.AntiToxicList.length)];
+            this.response = Lists.AntiToxicList[random.nextInt(Lists.AntiToxicList.length)];
         } else if (l == 2) {
-            response = Lists.AntiSlurList[random.nextInt(Lists.AntiSlurList.length)];
+            this.response = Lists.AntiSlurList[random.nextInt(Lists.AntiSlurList.length)];
         } else {
-            response = null;
+            this.response = null;
         }
     }
 
     public String toString() {
-        if (priv) {
-            return("msg " + name + " " + name + response);
+        if (this.previous) {
+            return("msg " + this.name + " " + this.name + this.response);
         }
         else {
-            return (name + response);
+            return (this.name + this.response);
         }
     }
 }
