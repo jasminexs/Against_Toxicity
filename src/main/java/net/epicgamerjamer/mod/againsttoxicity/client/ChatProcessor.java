@@ -43,8 +43,8 @@ public class ChatProcessor {
                 .toLowerCase();
         this.name = NameHelper.getUsername(m);
         this.isSingleplayer = MinecraftClient.getInstance().isInSingleplayer();
-        if (ModConfig.debug) LOGGER.info("ChatProcessor - \"msg\" = " + msg);
-        if (ModConfig.debug) LOGGER.info("ChatProcessor - \"name\" = " + name);
+        DebugLogger.debug("ChatProcessor - \"msg\" = " + msg);
+        DebugLogger.debug("ChatProcessor - \"name\" = " + name);
         if (!isSingleplayer)
             this.address = (Objects.requireNonNull((Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler())).getServerInfo()).address);
         else this.address = "singeplayer";
