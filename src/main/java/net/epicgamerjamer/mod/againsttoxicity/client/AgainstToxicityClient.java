@@ -9,6 +9,6 @@ public class AgainstToxicityClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         AutoConfig.register(ModConfig.class, JanksonConfigSerializer::new);
-        System.out.println("[AgainstToxicity] Initialized");
+        System.out.println("AgainstToxicity Initialized");
     }
 }
