@@ -6,5 +6,6 @@
   "text.autoconfig.againsttoxicity.option.servers.privateServers" : "Always /msg players on:",
   "text.autoconfig.againsttoxicity.option.servers.publicServers" : "Never /msg players on:",
   "text.autoconfig.againsttoxicity.option.friends" : "Friends list",
+  "text.autoconfig.againsttoxicity.option.friends.@Tooltip" : "!!! Requires Restart to Change !!!",
   "text.autoconfig.againsttoxicity.option.debug" : "Debug mode"
 }
