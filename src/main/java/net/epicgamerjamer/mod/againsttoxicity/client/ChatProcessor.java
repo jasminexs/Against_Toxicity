@@ -1,7 +1,8 @@
 package net.epicgamerjamer.mod.againsttoxicity.client;
 
+import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.MinecraftClient;
-import org.jetbrains.annotations.NotNull;
+import org.spongepowered.asm.mixin.Unique;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -12,8 +13,18 @@ public class ChatProcessor {
     public String name;
     public String address;
     public boolean isSingleplayer;
+    @Unique
+    ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+    @Unique
+    private boolean debug = config.debug;
+    @Unique
+    private boolean privateDefault = config.privateDefault;
+    @Unique
+    private String[] publicServers = config.servers.publicServers;
+    @Unique
+    private String[] privateServers = config.servers.privateServers;
 
-    public ChatProcessor(@NotNull String m) {
+    public ChatProcessor(String m, String n) {
         msg = m.replace("\\", "")
                 .replace("/", "")
                 .replace("[", "")
@@ -38,11 +49,12 @@ public class ChatProcessor {
                 .replace(" youre", " ur")
                 .replace(" you", " u")
                 .replace(" are", " r")
+                .replace("§","")
                 .toLowerCase();
-        name = NameHelper.getUsername(m);
+        name = n;
         isSingleplayer = MinecraftClient.getInstance().isInSingleplayer();
-        if (ModConfig.debug) System.out.println("[AgainstToxicity] ChatProcessor - \"msg\" = " + msg);
-        if (ModConfig.debug) System.out.println("[AgainstToxicity] ChatProcessor - \"name\" = " + name);
+        if (debug) System.out.println("[AgainstToxicity] ChatProcessor - \"msg\" = " + msg);
+        if (debug) System.out.println("[AgainstToxicity] ChatProcessor - \"name\" = " + name);
         if (!isSingleplayer)
             address = (Objects.requireNonNull((Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler())).getServerInfo()).address);
         else address = "singeplayer";
@@ -57,9 +69,8 @@ public class ChatProcessor {
         }
     } // Determines the toxicity level of a message; 2 means it has slurs, 1 means its toxic but no slurs, 0 means not toxic
     public boolean isPrivate() {
-        if (!ModConfig.privateDefault) {
-            String[] list = ModConfig.ServersDropdown.privateServers;
-            for (String s : list) {
+        if (!privateDefault) {
+            for (String s : privateServers) {
                 if (address.contains(s)) {
                     return true;
                 }
@@ -77,9 +88,8 @@ public class ChatProcessor {
             }
         }
         // true if toxic message is determined to be a pm
-        if (ModConfig.privateDefault) {
-            String[] list = ModConfig.ServersDropdown.publicServers;
-            for (String s : list) {
+        if (privateDefault) {
+            for (String s : publicServers) {
                 if (address.contains(s)) {
                     return false;
                 }
