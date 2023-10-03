@@ -25,16 +25,15 @@ public class MixinChat {
 
             if (name != null) {
                 ChatProcessor processor = new ChatProcessor(message, name);
-                int toxicity = processor.processChat();
+                int toxicity = processor.getToxicity();
                 boolean isPrivate = processor.isPrivate();
                 assert MinecraftClient.getInstance().player != null;
                 ClientPlayNetworkHandler handler = MinecraftClient.getInstance().player.networkHandler;
 
-                name = name.replace("§7","").replace("§r","");
                 if (toxicity > 0) {
                     String response = new TextBuilder(name, toxicity).toString();
-                    if (isPrivate) handler.sendChatCommand("msg " + name + " " + response);
-                    else handler.sendChatMessage(response);
+                    if (isPrivate) handler.sendChatCommand(("msg " + name + " " + response).replace("§", ""));
+                    else handler.sendChatMessage(response.replace("§", ""));
                 } else if (message.contains("!at")) {
                     // Lower priority than checking for toxicity - responds based on the sender of the "command"
                     if (name.matches("epicgamerjamer") && message.contains(":3")) {
