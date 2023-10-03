@@ -4,7 +4,6 @@ import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Unique;
 
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,49 +24,53 @@ public class ChatProcessor {
     private String[] privateServers = config.servers.privateServers;
 
     public ChatProcessor(String m, String n) {
-        msg = m.replace("\\", "")
-                .replace("/", "")
+        name = n;
+        msg = m.replace(",", "")
+                .replace(";", "")
+                .replace(":", "")
+                .replace("!", "")
+                .replace("?", "")
+                .replace(".", "")
+                .replace(".", "")
+                .replace("'", "")
+                .replace("(", "")
+                .replace(")", "")
                 .replace("[", "")
                 .replace("]", "")
                 .replace("{", "")
                 .replace("}", "")
-                .replace("(", "")
-                .replace(")", "")
-                .replace("?", "")
-                .replace("!", "")
-                .replace("*", "")
-                .replace(".", "")
-                .replace(";", "")
-                .replace(":", "")
-                .replace("'", "")
-                .replace("\"", "")
-                .replace("|", "")
+                .replace("§", "")
                 .replace("@", "")
-                .replace(",", "")
-                .replace(".", "")
+                .replace("*", "")
+                .replace("/", "")
+                .replace("\"", "")
+                .replace("\\", "")
+                .replace("+", "")
+                .replace("=", "")
+                .replace("|", "")
                 .replace("$", "")
+                .replace(" are", " r")
                 .replace(" youre", " ur")
                 .replace(" you", " u")
-                .replace(" are", " r")
-                .replace("§","")
+                .replace(" just ", " ")
                 .toLowerCase();
-        name = n;
-        isSingleplayer = MinecraftClient.getInstance().isInSingleplayer();
+        MinecraftClient instance = MinecraftClient.getInstance();
+        isSingleplayer = instance.isInSingleplayer();
         if (debug) System.out.println("[AgainstToxicity] ChatProcessor - \"msg\" = " + msg);
         if (debug) System.out.println("[AgainstToxicity] ChatProcessor - \"name\" = " + name);
-        if (!isSingleplayer)
-            address = (Objects.requireNonNull((Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler())).getServerInfo()).address);
-        else address = "singeplayer";
-    } // Constructor; also removes characters that screw up the ChatProcessor
-    public int processChat() {
+        if (!isSingleplayer) {
+            address = instance.getNetworkHandler().getServerInfo().address;
+        } else address = "singeplayer";
+    }
+    public int getToxicity() {
         if (checkSlurs()) {
             return 2;
-        } else if (checkToxic()) {
+        } else if (checkToxicity()) {
             return 1;
         } else {
             return 0;
         }
-    } // Determines the toxicity level of a message; 2 means it has slurs, 1 means its toxic but no slurs, 0 means not toxic
+    } // Determines the toxicity level of a message; 2 = has slurs, 1 = toxic but no slurs, 0 = not toxic
     public boolean isPrivate() {
         if (!privateDefault) {
             for (String s : privateServers) {
@@ -76,18 +79,6 @@ public class ChatProcessor {
                 }
             }
         } // true if server is in private overrides
-
-        String[] pmList = {
-                "-> you",
-                "-> me",
-                "<--"
-        };
-        for (String s : pmList) {
-            if (msg.toLowerCase().contains(s)) {
-                return true;
-            }
-        }
-        // true if toxic message is determined to be a pm
         if (privateDefault) {
             for (String s : publicServers) {
                 if (address.contains(s)) {
@@ -97,9 +88,20 @@ public class ChatProcessor {
             return true;
         } // false if server is in the public overrides, true if not
 
-        return false; // false if none of the conditions are met (shouldn't occur but just in case)
-    } // Checks certain conditions to determine whether to send the message privately or publicly
-    private boolean checkToxic() {
+        String[] pm = {
+                "-> you",
+                "-> me",
+                "<--"
+        };
+        for (String s : pm) {
+            if (msg.toLowerCase().contains(s)) {
+                return true;
+            }
+        } // true if message is a private message
+
+        return false; // false if none of the conditions are met
+    } // Checks whether to send the message privately or publicly
+    private boolean checkToxicity() {
         String[] list = Lists.ToxicList; // Single words; prevents false positives ("assist" flagged by "ass")
         String[] list2 = Lists.ToxicList2; // Phrases; doesn't flag without space ("urbad" = false, "ur bad" = true)
         if (msg.contains(" was blown up by ")) msg = msg.substring(msg.indexOf("was blown"));
