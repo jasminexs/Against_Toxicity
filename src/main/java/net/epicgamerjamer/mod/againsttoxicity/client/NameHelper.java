@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class NameHelper {
     //    Thanks to Crosby/RacoonDog for optimizing regex
-    private static final Pattern prefixes = Pattern.compile("(<)?(BOOSTER |MOD |ADMIN |DEV |YOUTUBE |Stray |VIP|<-- |Party]|Dead]|\\[)?([^>\\s:]+)");
+    private static final Pattern prefixes = Pattern.compile("(<)?(BOOSTER |MOD |ADMIN |DEV |YOUTUBE |Stray |VIP|<-- |Party]|到细 |煪䋿 |䋽䋾 |䋻䋼 |\\[)?([^>\\s:]+)");
     private static final Pattern blownup = Pattern.compile("was blown up by (\\w+)");
     private static final Pattern slain = Pattern.compile("was slain by (\\w+)");
     @Unique
@@ -18,30 +18,10 @@ public class NameHelper {
     private static String[] friends = config.friends;
     public static String getUsername(String input) {
         if (config.debug) System.out.println(Arrays.toString(friends));
-        input = input.replace("\\", "")
-                .replace("/", "")
-                .replace("[", "")
-                .replace("]", "")
-                .replace("{", "")
-                .replace("}", "")
-                .replace("(", "")
-                .replace(")", "")
-                .replace("?", "")
-                .replace("!", "")
-                .replace("*", "")
-                .replace(".", "")
-                .replace(";", "")
-                .replace(":", "")
-                .replace("'", "")
-                .replace("\"", "")
-                .replace("|", "")
-                .replace("@", "")
-                .replace(",", "")
-                .replace(".", "")
-                .replace("$", "");
         Matcher matcher1 = prefixes.matcher(input);
         boolean ignorePlayer = false;
         String[] ignoreNames = Lists.IgnoreNames;
+        String name;
 
         if (input.contains("was blown up by")) {
             Matcher matcher2 = blownup.matcher(input.substring(input.indexOf(" was ")));
@@ -67,12 +47,12 @@ public class NameHelper {
                 }
             }
             if (!ignorePlayer) {
-                String name = matcher1.group(3);
+                name = matcher1.group(3);
                 if (matcher1.group(3).contains("--")) name = matcher1.group(3).substring(2);
                 if (name.length() == 1) {
-                    return getUsername(input.substring(1).replace("§",""));
+                    return getUsername(input.substring(1));
                 }
-                return name.replace("§","");
+                return name.replace("Dead]<§7", "").replace("§r", "");
             }
         }
         return null;
