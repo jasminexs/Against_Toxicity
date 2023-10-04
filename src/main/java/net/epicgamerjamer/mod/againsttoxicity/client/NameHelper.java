@@ -5,8 +5,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Unique;
 
-import java.util.Arrays;
-
 public class NameHelper {
     @Unique
     private static Config config = AutoConfig.getConfigHolder(Config.class).getConfig();
