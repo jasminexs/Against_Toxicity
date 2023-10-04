@@ -13,7 +13,7 @@ public class ChatProcessor {
     public String address;
     public boolean isSingleplayer;
     @Unique
-    ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+    Config config = AutoConfig.getConfigHolder(Config.class).getConfig();
     @Unique
     private boolean debug = config.debug;
     @Unique
@@ -25,40 +25,17 @@ public class ChatProcessor {
 
     public ChatProcessor(String m, String n) {
         name = n;
-        msg = m.replace(",", "")
-                .replace(";", "")
-                .replace(":", "")
-                .replace("!", "")
-                .replace("?", "")
-                .replace(".", "")
-                .replace(".", "")
-                .replace("'", "")
-                .replace("(", "")
-                .replace(")", "")
-                .replace("[", "")
-                .replace("]", "")
-                .replace("{", "")
-                .replace("}", "")
-                .replace("§", "")
-                .replace("@", "")
-                .replace("*", "")
-                .replace("/", "")
-                .replace("\"", "")
-                .replace("\\", "")
-                .replace("+", "")
-                .replace("=", "")
-                .replace("|", "")
-                .replace("$", "")
-                .replace(" are", " r")
-                .replace(" youre", " ur")
-                .replace(" you", " u")
+        msg = m.toLowerCase()
+                .replaceAll("[^a-zA-Z0-9_ ]", "")
+                .replace(" are ", " r ")
+                .replace(" youre ", " ur ")
+                .replace(" u ", " you ")
                 .replace(" just ", " ")
-                .toLowerCase();
+                .replace(name.toLowerCase(), "");
         MinecraftClient instance = MinecraftClient.getInstance();
-        isSingleplayer = instance.isInSingleplayer();
         if (debug) System.out.println("[AgainstToxicity] ChatProcessor - \"msg\" = " + msg);
         if (debug) System.out.println("[AgainstToxicity] ChatProcessor - \"name\" = " + name);
-        if (!isSingleplayer) {
+        if (!instance.isInSingleplayer()) {
             address = instance.getNetworkHandler().getServerInfo().address;
         } else address = "singeplayer";
     }
@@ -87,19 +64,7 @@ public class ChatProcessor {
             }
             return true;
         } // false if server is in the public overrides, true if not
-
-        String[] pm = {
-                "-> you",
-                "-> me",
-                "<--"
-        };
-        for (String s : pm) {
-            if (msg.toLowerCase().contains(s)) {
-                return true;
-            }
-        } // true if message is a private message
-
-        return false; // false if none of the conditions are met
+        return NameHelper.isPrivate; // true if before conditions weren't met and the message is sent to the player privately
     } // Checks whether to send the message privately or publicly
     private boolean checkToxicity() {
         String[] list = Lists.ToxicList; // Single words; prevents false positives ("assist" flagged by "ass")
@@ -127,7 +92,7 @@ public class ChatProcessor {
     } // Return true if the 1+ word(s) matches an entry in list, OR true if the message contains any phrase in list2
     private boolean checkSlurs() {
         Pattern regex = Pattern.compile(String.join("|", Lists.SlurList), Pattern.CASE_INSENSITIVE);
-        Matcher matcher = regex.matcher(msg.replace(" ", "").replace(name.toLowerCase(), ""));
+        Matcher matcher = regex.matcher(msg.replace(" ", ""));
 
         return matcher.find();
     } // Return true if the chat message has a slur, ignores spaces (VERY sensitive)
