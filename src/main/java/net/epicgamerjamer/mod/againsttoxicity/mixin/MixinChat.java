@@ -2,7 +2,7 @@ package net.epicgamerjamer.mod.againsttoxicity.mixin;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import net.epicgamerjamer.mod.againsttoxicity.client.ChatProcessor;
-import net.epicgamerjamer.mod.againsttoxicity.client.ModConfig;
+import net.epicgamerjamer.mod.againsttoxicity.client.Config;
 import net.epicgamerjamer.mod.againsttoxicity.client.NameHelper;
 import net.epicgamerjamer.mod.againsttoxicity.client.TextBuilder;
 import net.minecraft.client.MinecraftClient;
@@ -18,10 +18,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinChat {
     @Inject(method = "addMessage(Lnet/minecraft/text/Text;)V", at = @At("RETURN"))
     public void onGameMessage(Text m, CallbackInfo ci) {
-        if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().modEnabled) {
-            String message = m.getString();
+        if (AutoConfig.getConfigHolder(Config.class).getConfig().modEnabled) {
+            String modVer = "v1.5";
+
+            String message = m.getString().replace("§7","").replace("§r","") + " ";
             String name = NameHelper.getUsername(message);
-            String modVer = "v1.4.0";
+
+            message = message.replaceAll("[^a-zA-Z0-9_:<>()\\[\\] ]", "");
+
+            if (message.contains(" was blown up by ")) {
+                message = message.substring(message.indexOf(" was blown up by ")+17);
+            }
+            if (message.contains(" was slain by ")) {
+                message = message.substring(message.indexOf(" was slain by ")+13);
+            }
 
             if (name != null) {
                 ChatProcessor processor = new ChatProcessor(message, name);
