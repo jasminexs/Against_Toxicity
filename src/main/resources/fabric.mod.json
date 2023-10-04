@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "againsttoxicity",
-  "version": "1.4-1.20.1",
+  "version": "1.5",
   "name": "Against Toxicity",
   "description": "Simple chat mod/bot that reminds people to be nice!",
   "authors": [
@@ -20,7 +20,7 @@
       "net.epicgamerjamer.mod.againsttoxicity.client.AgainstToxicityClient"
     ],
     "modmenu": [
-      "net.epicgamerjamer.mod.againsttoxicity.client.ModMenuPlugin"
+      "net.epicgamerjamer.mod.againsttoxicity.client.ModMenuImpl"
     ]
   },
   "mixins": [
