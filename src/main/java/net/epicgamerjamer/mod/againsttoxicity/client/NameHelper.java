@@ -1,60 +1,95 @@
 package net.epicgamerjamer.mod.againsttoxicity.client;
 
 import me.shedaniel.autoconfig.AutoConfig;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Unique;
 
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class NameHelper {
-    //    Thanks to Crosby/RacoonDog for optimizing regex
-    private static final Pattern prefixes = Pattern.compile("(<)?(BOOSTER |MOD |ADMIN |DEV |YOUTUBE |Stray |VIP|<-- |Party]|到细 |煪䋿 |䋽䋾 |䋻䋼 |\\[)?([^>\\s:]+)");
-    private static final Pattern blownup = Pattern.compile("was blown up by (\\w+)");
-    private static final Pattern slain = Pattern.compile("was slain by (\\w+)");
     @Unique
-    private static ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+    private static Config config = AutoConfig.getConfigHolder(Config.class).getConfig();
     @Unique
     private static String[] friends = config.friends;
-    public static String getUsername(String input) {
-        if (config.debug) System.out.println(Arrays.toString(friends));
-        Matcher matcher1 = prefixes.matcher(input);
-        boolean ignorePlayer = false;
-        String[] ignoreNames = Lists.IgnoreNames;
-        String name;
+    private static final String[] ignoreNames = Lists.IgnoreNames;
+    public static boolean isPrivate;
 
-        if (input.contains("was blown up by")) {
-            Matcher matcher2 = blownup.matcher(input.substring(input.indexOf(" was ")));
-            if (matcher2.find()) return matcher2.group(1);
+    public static @Nullable String getUsername(@NotNull String input) {
+        String name = null;
+        String[] split = input.split(" ");
+
+        if (input.contains(" using ") && (input.contains(" was blown up by ") || input.contains(" was slain by "))) {
+            name = input.substring(input.indexOf(" by ")+4, input.indexOf(" using"));
         }
 
-        if (input.contains("was slain by")) {
-            Matcher matcher3 = slain.matcher(input.substring(input.indexOf(" was ")));
-            if (matcher3.find()) return matcher3.group(1);
-        }
+        else if (input.toLowerCase().contains(" -> you") || input.toLowerCase().contains(" -> me")) {
+            name = input.substring(0, input.toLowerCase().indexOf(" -> "));
+            isPrivate = true;
+        } // Most servers use this for private messages
 
-        if (matcher1.find() && matcher1.group(3) != null) {
-            for (String i : ignoreNames) {
-                if (i.matches(matcher1.group(3).toLowerCase())) {
-                    ignorePlayer = true;
+        else if (input.toLowerCase().contains(" whispers to you:") || input.toLowerCase().contains(" whispers:")) {
+            name = input.substring(0, input.indexOf(" whispers"));
+            isPrivate = true;
+        } // Vanilla and 2b2t use this
+
+        else if (input.startsWith("<--") && input.contains(": ")) {
+            name = input.substring(3, input.indexOf(":"));
+            isPrivate = true;
+        } // Feather (stinky) uses this
+
+        else if (input.contains("<") && input.contains(">")) {
+            int diff = (input.indexOf(">")) - (input.indexOf("<"));
+            if (diff < 18 && diff > 2) {
+                name = input.substring(input.indexOf("<") + 1, input.indexOf(">"));
+                isPrivate = false;
+            }
+        } // confirmed to work on vanilla
+
+        else if (input.contains(":")) {
+            for (String s:split) {
+                if (s.contains(":")) {
+                    name = s.replace(":","");
+                    isPrivate = false;
                     break;
                 }
             }
-            for (String i : friends) {
-                if (i.matches(matcher1.group(3))) {
-                    ignorePlayer = true;
+        } // confirmed to work on uspvp
+
+        else if (input.contains(" > ") || input.contains(" >> ") || input.contains(" » ")) {
+            String s;
+            for (int i = 0; i < split.length - 1; i++) {
+                s = split[i];
+                if (s.length() > 2 && s.length() < 17 && (split[i+1].equals(">") || split[i+1].equals(">>"))) {
+                    name = s;
+                    isPrivate = false;
                     break;
                 }
             }
-            if (!ignorePlayer) {
-                name = matcher1.group(3);
-                if (matcher1.group(3).contains("--")) name = matcher1.group(3).substring(2);
-                if (name.length() == 1) {
-                    return getUsername(input.substring(1));
-                }
-                return name.replace("Dead]<§7", "").replace("§r", "");
+        } // confirmed to work on pvp club, mcmanhunt, stoneworks
+
+        if (name != null && name.length() > 1 && name.length() < 30 && !ignorePlayer(name)) {
+            name = name.replaceAll("[^a-zA-Z0-9_ ]", "");
+            if (name.contains(" ")) {
+                name = name.substring(name.indexOf(" "));
+            }
+            return name.replace(" ", "");
+        }
+        else {
+            return null;
+        }
+    }
+    private static boolean ignorePlayer(String name) {
+        for (String s:friends) {
+            if (name.equals(s)) {
+                return true;
             }
         }
-        return null;
+        for (String s:ignoreNames) {
+            if (name.equals(s)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
