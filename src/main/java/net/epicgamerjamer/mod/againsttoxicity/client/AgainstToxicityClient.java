@@ -8,7 +8,7 @@ import net.fabricmc.api.ClientModInitializer;
 public class AgainstToxicityClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        AutoConfig.register(ModConfig.class, JanksonConfigSerializer::new);
+        AutoConfig.register(Config.class, JanksonConfigSerializer::new);
         System.out.println("AgainstToxicity Initialized");
     }
 }
