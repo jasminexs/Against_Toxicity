@@ -184,6 +184,8 @@ public class Lists {
             "montage",
             "moron",
             "motherfucker",
+            "nerd",
+            "nerdy",
             "newgen",
             "nga",
             "ngga",
@@ -201,12 +203,13 @@ public class Lists {
             "pinger",
             "preplacer",
             "puss",
+            "pussies",
             "pussy",
             "pusy",
             "qd",
             "queer",
             "quickdrop",
-            "random",
+            "rando",
             "rape",
             "raping",
             "rekt",
@@ -299,7 +302,7 @@ public class Lists {
             "not good",
             "off yourself",
             "off your self",
-            " own you",
+            "own you",
             "pipe down",
             "piss off",
             "prac main",
@@ -325,7 +328,6 @@ public class Lists {
             "touch grass",
             "you bad",
             "you dog",
-            "you only",
             "you shit",
             "you suck",
             "ur bad",
@@ -335,7 +337,7 @@ public class Lists {
             "who asked",
             "who cares",
             "who r",
-            "who tf"
+            "who tf r"
     };
 
     public static final String[] IgnoreNames = {
