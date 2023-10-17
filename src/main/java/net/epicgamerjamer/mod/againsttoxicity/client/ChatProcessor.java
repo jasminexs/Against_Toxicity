@@ -4,14 +4,10 @@ import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Unique;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class ChatProcessor {
     public String msg;
     public String name;
     public String address;
-    public boolean isSingleplayer;
     @Unique
     Config config = AutoConfig.getConfigHolder(Config.class).getConfig();
     @Unique
@@ -25,16 +21,18 @@ public class ChatProcessor {
 
     public ChatProcessor(String m, String n) {
         name = n;
-        msg = m.toLowerCase()
-                .replaceAll("[^a-zA-Z0-9_ ]", "")
+        msg = (m.toLowerCase() + " ")
+                .replaceAll("[^a-z0-9_ ]", "")
                 .replace(" are ", " r ")
                 .replace(" youre ", " ur ")
+                .replace(" your ", " ur ")
                 .replace(" u ", " you ")
                 .replace(" just ", " ")
-                .replace(name.toLowerCase(), "");
+                .replace(" really ", " ");
+        msg = " " + msg.substring(msg.indexOf(name.toLowerCase()) + name.length() + 1).trim() + " ";
         MinecraftClient instance = MinecraftClient.getInstance();
-        if (debug) System.out.println("[AgainstToxicity] ChatProcessor - \"msg\" = " + msg);
-        if (debug) System.out.println("[AgainstToxicity] ChatProcessor - \"name\" = " + name);
+        if (debug) System.out.println("[AgainstToxicity] ChatProcessor - Message: \"" + msg + "\"");
+        if (debug) System.out.println("[AgainstToxicity] ChatProcessor - Name: \"" + name + "\"");
         if (!instance.isInSingleplayer()) {
             address = instance.getNetworkHandler().getServerInfo().address;
         } else address = "singeplayer";
@@ -91,9 +89,11 @@ public class ChatProcessor {
         return false;
     } // Return true if the 1+ word(s) matches an entry in list, OR true if the message contains any phrase in list2
     private boolean checkSlurs() {
-        Pattern regex = Pattern.compile(String.join("|", Lists.SlurList), Pattern.CASE_INSENSITIVE);
-        Matcher matcher = regex.matcher(msg.replace(" ", ""));
-
-        return matcher.find();
+        for (String s:Lists.SlurList) {
+            if (msg.contains(s)) {
+                return true;
+            }
+        }
+        return false;
     } // Return true if the chat message has a slur, ignores spaces (VERY sensitive)
 }
