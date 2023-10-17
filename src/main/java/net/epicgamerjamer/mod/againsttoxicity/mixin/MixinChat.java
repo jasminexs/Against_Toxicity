@@ -19,21 +19,18 @@ public class MixinChat {
     @Inject(method = "addMessage(Lnet/minecraft/text/Text;)V", at = @At("RETURN"))
     public void onGameMessage(Text m, CallbackInfo ci) {
         if (AutoConfig.getConfigHolder(Config.class).getConfig().modEnabled) {
-            String modVer = "v1.5";
+            String modVer = "v1.5.1";
 
-            String message = m.getString().replace("§7","").replace("§r","") + " ";
+            String message = m.getString().replaceAll("§[0-9]|§[a-zA-Z]","");
             String name = NameHelper.getUsername(message);
 
-            message = message.replaceAll("[^a-zA-Z0-9_:<>()\\[\\] ]", "");
-
-            if (message.contains(" was blown up by ")) {
-                message = message.substring(message.indexOf(" was blown up by ")+17);
-            }
-            if (message.contains(" was slain by ")) {
-                message = message.substring(message.indexOf(" was slain by ")+13);
-            }
-
             if (name != null) {
+                message = message.replaceAll("[^a-zA-Z0-9_:<>()\\[\\]!\\- ]", "");
+
+                if (message.contains(" was blown up by ") || message.contains(" was slain by ")) {
+                    message = message.substring(message.indexOf(name) + name.length());
+                }
+
                 ChatProcessor processor = new ChatProcessor(message, name);
                 int toxicity = processor.getToxicity();
                 boolean isPrivate = processor.isPrivate();
@@ -42,9 +39,10 @@ public class MixinChat {
 
                 if (toxicity > 0) {
                     String response = new TextBuilder(name, toxicity).toString();
-                    if (isPrivate) handler.sendChatCommand(("msg " + name + " " + response).replace("§", ""));
-                    else handler.sendChatMessage(response.replace("§", ""));
-                } else if (message.contains("!at")) {
+                    if (isPrivate) handler.sendChatCommand(("msg " + name + " " + response));
+                    else handler.sendChatMessage(response);
+                }
+                else if (message.contains("!at")) {
                     // Lower priority than checking for toxicity - responds based on the sender of the "command"
                     if (name.matches("epicgamerjamer") && message.contains(":3")) {
                         handler.sendChatMessage("I support trans rights! :3");
