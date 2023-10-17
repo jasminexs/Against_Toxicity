@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "againsttoxicity",
-  "version": "1.5",
+  "version": "1.5.1",
   "name": "Against Toxicity",
   "description": "Simple chat mod/bot that reminds people to be nice!",
   "authors": [
@@ -27,8 +27,8 @@
     "againsttoxicity.mixins.json"
   ],
   "depends": {
-    "cloth-config": ">=11.1.106",
-    "modmenu":  ">=7.1.0",
-    "minecraft": "1.20.1"
+    "cloth-config": ">=10.1.105",
+    "modmenu":  ">=6.3.1",
+    "minecraft": ">=1.19.4"
   }
 }
