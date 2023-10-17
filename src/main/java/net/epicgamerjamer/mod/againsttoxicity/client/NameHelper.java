@@ -15,10 +15,12 @@ public class NameHelper {
 
     public static @Nullable String getUsername(@NotNull String input) {
         String name = null;
+        input = input.replaceAll("»|>>",">");
         String[] split = input.split(" ");
 
+
         if (input.contains(" using ") && (input.contains(" was blown up by ") || input.contains(" was slain by "))) {
-            name = input.substring(input.indexOf(" by ")+4, input.indexOf(" using"));
+            name = input.substring(input.indexOf(" by ") + 4, input.indexOf(" using"));
         }
 
         else if (input.toLowerCase().contains(" -> you") || input.toLowerCase().contains(" -> me")) {
@@ -53,8 +55,7 @@ public class NameHelper {
                 }
             }
         } // confirmed to work on uspvp
-
-        else if (input.contains(" > ") || input.contains(" >> ") || input.contains(" » ")) {
+        else if (input.contains(" > ")) {
             String s;
             for (int i = 0; i < split.length - 1; i++) {
                 s = split[i];
