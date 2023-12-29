@@ -2,10 +2,10 @@
   "text.autoconfig.againsttoxicity.title" : "Against Toxicity Configuration Menu",
   "text.autoconfig.againsttoxicity.option.modEnabled" : "Mod Enabled",
   "text.autoconfig.againsttoxicity.option.privateDefault" : "Send messages privately by default",
-  "text.autoconfig.againsttoxicity.option.servers" : "Override default /msg",
+  "text.autoconfig.againsttoxicity.option.servers" : "Override /msg default",
   "text.autoconfig.againsttoxicity.option.servers.privateServers" : "Always /msg players on:",
   "text.autoconfig.againsttoxicity.option.servers.publicServers" : "Never /msg players on:",
   "text.autoconfig.againsttoxicity.option.friends" : "Friends list",
-  "text.autoconfig.againsttoxicity.option.friends.@Tooltip" : "!!! Requires Restart to Change !!!",
-  "text.autoconfig.againsttoxicity.option.debug" : "Debug mode"
+  "text.autoconfig.againsttoxicity.option.removeLetterSpam" : "Remove letters repeating >2 times",
+  "text.autoconfig.againsttoxicity.option.removeLetterSpam.@Tooltip" : "!!! Experimental, may be laggy !!!"
 }
