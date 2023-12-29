@@ -7,17 +7,13 @@ public class TextBuilder {
     private final String name;
     private final String response;
 
-    public TextBuilder(String n, int l) {
-        name = n;
-        if (l == 1) {
-            response = Lists.AntiToxicList[random.nextInt(Lists.AntiToxicList.length)];
-        } else if (l == 2) {
-            response = Lists.AntiSlurList[random.nextInt(Lists.AntiSlurList.length)];
-        } else {
-            response = null;
-        }
+    public TextBuilder(String s, int i) {
+        name = s;
+        if (i == 1) response = Lists.AntiToxic[random.nextInt(Lists.AntiToxic.length)];
+        else if (i == 2) response = Lists.AntiSlur[random.nextInt(Lists.AntiSlur.length)];
+        else response = null;
     }
     public String toString() {
-            return (name + response);
+            return name + response;
     }
 }
