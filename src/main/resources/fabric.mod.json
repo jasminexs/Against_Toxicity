@@ -1,12 +1,10 @@
 {
   "schemaVersion": 1,
   "id": "againsttoxicity",
-  "version": "1.5.1",
+  "version": "1.6",
   "name": "Against Toxicity",
   "description": "Simple chat mod/bot that reminds people to be nice!",
-  "authors": [
-    "epicgamerjamer"
-  ],
+  "authors": ["epicgamerjamer"],
   "contact": {
     "homepage": "https://discord.gg/stqwNAezeP",
     "issues": "https://github.com/epicgamerjamer/Against_Toxicity/issues",
@@ -27,8 +25,8 @@
     "againsttoxicity.mixins.json"
   ],
   "depends": {
-    "cloth-config": ">=10.1.105",
-    "modmenu":  ">=6.3.1",
+    "cloth-config": ">=11.1.118",
+    "modmenu":  "*",
     "minecraft": ">=1.19.4"
   }
 }
