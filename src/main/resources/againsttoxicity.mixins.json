@@ -4,10 +4,12 @@
   "package": "net.epicgamerjamer.mod.againsttoxicity.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "MixinChat"
+    "ChatScreenMixin",
+    "ChatHudMixin"
   ],
   "client": [
-    "MixinChat"
+    "ChatScreenMixin",
+    "ChatHudMixin"
   ],
   "injectors": {
     "defaultRequire": 1
