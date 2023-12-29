@@ -10,7 +10,7 @@ public class Config implements ConfigData {
     public boolean privateDefault = false;
 
     @ConfigEntry.Gui.Tooltip
-    public boolean removeLetterSpam = false;
+    public boolean removeLetterSpam = true;
 
     @ConfigEntry.Gui.CollapsibleObject
     ServersDropdown servers = new ServersDropdown();
