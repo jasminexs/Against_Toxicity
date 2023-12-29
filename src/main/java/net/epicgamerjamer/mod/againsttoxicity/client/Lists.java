@@ -1,20 +1,15 @@
 package net.epicgamerjamer.mod.againsttoxicity.client;
-
-import net.minecraft.client.MinecraftClient;
-// Thanks to Crosby/RacoonDog for making Lists static
 public class Lists {
-    public static final String[] AntiSlurList = {
+    public static final String[] AntiSlur = {
             ", be careful of who you hate, it could be someone you love.",
             ", everyone deserves respect, regardless of our differences.",
             ", hurtful slurs have no place in a respectful dialogue.",
-            ", I understand you're upset, but using slurs no way to talk to others!",
+            ", I understand you're upset, but using slurs is no way to talk to others!",
             ", inclusive discussions require us to refrain from using slurs.",
             ", it's crucial to understand that slurs have no role in civil discourse.",
             ", let's maintain a civil conversation by avoiding offensive slurs.",
-            ", please don't use such offensive language!",
-            ", please find less harmful ways to express your emotions!",
             ", promoting a respectful environment means avoiding the use of slurs.",
-            ", remember that our words can shape our world, so let's choose wisely and reject slurs.",
+            ", let's choose our words wisely and reject slurs.",
             ", remember that racism and fascism go hand in hand.",
             ", respecting one another means refraining from hurtful slurs.",
             ", slurs are hurtful and have no place in a supportive community.",
@@ -25,7 +20,7 @@ public class Lists {
             ", we should all strive to communicate without resorting to slurs.",
     };
 
-    public static final String[] AntiToxicList = {
+    public static final String[] AntiToxic = {
             ", a foundation of our community is built on respectful communication.",
             ", a positive community thrives on respectful communication.",
             ", choose to uplift others with your words, rather than bring them down.",
@@ -57,12 +52,13 @@ public class Lists {
             ", take a chill pill.",
             ", take a moment to think before speaking.",
             ", treat others as you would like to be treated.",
+            ", use your manners!",
+            ", where are your manners?",
             ", while the PvP community can be toxic, we can work together to make it better.",
             ", why so toxic?",
     };
 
-    public static final String[] SlurList = {
-            "autis",
+    public static final String[] Slurs = {
             "beaner",
             "blackie",
             "blacky",
@@ -77,9 +73,7 @@ public class Lists {
             "gasall",
             "gasthe",
             "gypsy",
-            "jew",
             "killall",
-            "killthe",
             "mentalillness",
             "n1g",
             "negro",
@@ -89,16 +83,18 @@ public class Lists {
             "niga",
             "niger",
             "nigg",
+            "niigg",
             "nijj",
             "niqq",
             "nlgg",
+            "retart",
             "shitskin",
             "tard",
             "trann",
             "trany",
     };
 
-    public static final String[] ToxicList = {
+    public static final String[] Words = {
             "abuse",
             "abuser",
             "abusing",
@@ -106,14 +102,7 @@ public class Lists {
             "annoying",
             "ass",
             "asshole",
-            "asss",
-            "assss",
-            "asssss",
-            "assssss",
-            "asssssss",
             "awful",
-            "bitch",
-            "bitchass",
             "boosted",
             "bozo",
             "buddy",
@@ -132,9 +121,6 @@ public class Lists {
             "dodger",
             "dodging",
             "dogshit",
-            "dox",
-            "doxx",
-            "doxxed",
             "dumb",
             "dumbass",
             "dummy",
@@ -142,9 +128,7 @@ public class Lists {
             "ez",
             "ezpz",
             "ezz",
-            "ezzz",
             "faceplacer",
-            "fan",
             "fanning",
             "fat",
             "fatass",
@@ -166,6 +150,7 @@ public class Lists {
             "horrid",
             "hush",
             "idiot",
+            "jew",
             "kid",
             "kiddo",
             "kiddos",
@@ -174,9 +159,6 @@ public class Lists {
             "l",
             "lagger",
             "ll",
-            "lll",
-            "llll",
-            "lllll",
             "loser",
             "lucky",
             "mf",
@@ -206,15 +188,15 @@ public class Lists {
             "pussies",
             "pussy",
             "pusy",
+            "pz",
             "qd",
             "queer",
             "quickdrop",
             "rando",
             "rape",
+            "raped",
             "raping",
             "rekt",
-            "rider",
-            "riding",
             "rolled",
             "runner",
             "running",
@@ -227,7 +209,6 @@ public class Lists {
             "slut",
             "smd",
             "spammer",
-            "spamming",
             "sped",
             "stfu",
             "sthu",
@@ -249,8 +230,10 @@ public class Lists {
             "yapping",
     };
     public static final String[] ToxicList2 = {
+            "autis",
             "all shit",
             "be quiet",
+            "bitch",
             "blud cant",
             "blud has",
             "blud only",
@@ -261,12 +244,12 @@ public class Lists {
             "end it",
             "end your",
             "ezez",
-            "ezzzz",
             "face placer",
             " f you",
             "frick you",
             "fuck the",
             "fuck off",
+            "fuck up",
             "fuck you",
             "get a life",
             "get better",
@@ -279,8 +262,6 @@ public class Lists {
             "is crazy",
             "is shit",
             "is wild",
-            "just bad",
-            "just suck",
             "keep talking",
             "kill your",
             "k ys",
@@ -347,7 +328,6 @@ public class Lists {
             "shouts",
             "soapbar",
             "you",
-            "me",
-            MinecraftClient.getInstance().player.getName().getString()
+            "me"
     };
 }
