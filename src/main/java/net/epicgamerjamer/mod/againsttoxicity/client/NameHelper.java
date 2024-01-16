@@ -1,6 +1,7 @@
 package net.epicgamerjamer.mod.againsttoxicity.client;
 
 import me.shedaniel.autoconfig.AutoConfig;
+import net.minecraft.client.MinecraftClient;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Unique;
@@ -18,10 +19,8 @@ public class NameHelper {
         input = input.replaceAll("»|>>",">");
         String[] split = input.split(" ");
 
-
-        if (input.contains(" using ") && (input.contains(" was blown up by ") || input.contains(" was slain by "))) {
+        if (input.contains(" using ") && (input.contains(" was blown up by ") || input.contains(" was slain by ")))
             name = input.substring(input.indexOf(" by ") + 4, input.indexOf(" using"));
-        }
 
         else if (input.toLowerCase().contains(" -> you") || input.toLowerCase().contains(" -> me")) {
             name = input.substring(0, input.toLowerCase().indexOf(" -> "));
@@ -69,9 +68,7 @@ public class NameHelper {
 
         if (name != null && name.length() > 1 && name.length() < 30 && !ignorePlayer(name)) {
             name = name.replaceAll("[^a-zA-Z0-9_ ]", "");
-            if (name.contains(" ")) {
-                name = name.substring(name.indexOf(" "));
-            }
+            if (name.contains(" ")) name = name.substring(name.indexOf(" "));
             return name.replace(" ", "");
         }
         else {
@@ -79,16 +76,10 @@ public class NameHelper {
         }
     }
     private static boolean ignorePlayer(String name) {
-        for (String s:friends) {
-            if (name.equals(s)) {
-                return true;
-            }
-        }
-        for (String s:ignoreNames) {
-            if (name.equals(s)) {
-                return true;
-            }
-        }
+        assert MinecraftClient.getInstance().player != null;
+        if (name.equals(MinecraftClient.getInstance().player.getName().getString())) return true;
+        for (String s:friends) if (name.equals(s)) return true;
+        for (String s:ignoreNames) if (name.equals(s)) return true;
         return false;
     }
 }
