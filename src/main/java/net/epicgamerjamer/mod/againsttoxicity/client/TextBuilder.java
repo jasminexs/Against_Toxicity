@@ -9,11 +9,13 @@ public class TextBuilder {
 
     public TextBuilder(String s, int i) {
         name = s;
-        if (i == 1) response = Lists.AntiToxic[random.nextInt(Lists.AntiToxic.length)];
-        else if (i == 2) response = Lists.AntiSlur[random.nextInt(Lists.AntiSlur.length)];
-        else response = null;
+        switch (i) {
+            case 2 -> response = Lists.AntiSlur[random.nextInt(Lists.AntiSlur.length)];
+            case 1 -> response = Lists.AntiToxic[random.nextInt(Lists.AntiToxic.length)];
+            default -> response = null;
+        }
     }
-    public String toString() {
-            return name + response;
+    public String getString() {
+        return name + response;
     }
 }
