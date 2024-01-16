@@ -4,6 +4,7 @@ import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Unique;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,19 +15,19 @@ public class ChatProcessor {
     Config config = AutoConfig.getConfigHolder(Config.class).getConfig();
 
     public ChatProcessor(String m) {
-        msg = " " + (m.replaceAll("[^a-z0-9_ ]", "")
-                .replace("are", "r")
-                .replace("youre", "ur")
-                .replace("your", "ur")
-                .replace("u", "you")
-                .replace("just", "")
-                .replace("really", ""));
+        msg = " " + (m.replaceAll("[^a-z0-9 ]", "")
+                .replace(" are", " r")
+                .replace(" youre", " ur")
+                .replace(" your", " ur")
+                .replace(" you", " u")
+                .replace(" just", "")
+                .replace(" really", ""));
         System.out.println("Before: " + msg);
         if (config.removeLetterSpam) msg = removeLetterSpam(msg);
         System.out.println("After: " + msg);
 
-        if (!MinecraftClient.getInstance().isInSingleplayer()) address = MinecraftClient.getInstance().getNetworkHandler().getServerInfo().address;
-        else address = "singleplayer";
+        if (!MinecraftClient.getInstance().isInSingleplayer()) address = Objects.requireNonNull(Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).getServerInfo()).address;
+        else address = "single player";
     }
     public int getToxicity() {
         if (checkSlurs()) return 2;
@@ -57,19 +58,15 @@ public class ChatProcessor {
     } // true if the chat message has a slur, ignores spaces
     private String removeLetterSpam(String s) {
         final String[] regexArr = {
-                "aaa+", "bbb+", "ccc+", "ddd+", "eee+", "fff+", "ggg+", "hhh+", "iii+", "jjj+", "kkk+", "lll+", "mmm+", "nnn+", "ooo+", "ppp+", "qqq+", "rrr+", "sss+", "ttt+", "uuu+", "vvv+", "www+", "xxx+", "yyy+", "zzz+"
+                "aa+", "bbb+", "ccc+", "ddd+", "eee+", "fff+", "ggg+", "hh+", "ii+", "jj+", "kk+", "lll+", "mmm+", "nnn+", "ooo+", "ppp+", "qqq+", "rrr+", "sss+", "ttt+", "uuu+", "vv+", "ww+", "xx+", "yy+", "zz+"
         };
         final String[] replaceArr = {
-                "aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh", "ii", "jj", "kk", "ll", "mm", "nn", "oo", "pp", "qq", "rr", "ss", "tt", "uu", "vv", "ww", "xx", "yy", "zz"
+                "a", "bb", "cc", "dd", "ee", "ff", "gg", "hh", "i", "j", "k", "ll", "mm", "nn", "oo", "pp", "qq", "rr", "ss", "tt", "uu", "v", "w", "x", "y", "z"
         };
 
-        // Compile the regex patterns
         Pattern[] patterns = new Pattern[26];
-        for (int i = 0; i < 26; i++) {
-            patterns[i] = Pattern.compile(regexArr[i]);
-        }
+        for (int i = 0; i < 26; i++) patterns[i] = Pattern.compile(regexArr[i]);
 
-        // Use Matcher to perform replacements
         for (int i = 0; i < 26; i++) {
             Matcher matcher = patterns[i].matcher(s);
             s = matcher.replaceAll(replaceArr[i]);
