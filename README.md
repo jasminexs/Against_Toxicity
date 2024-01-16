@@ -5,10 +5,6 @@
 - Default to private messaging (good for servers with a strict anti-spam policy)
 - Friends list: ignores friends being toxic
 - Per-server overrides: Always public and Always /msg when on certain servers (configurable)
-- `!at` commands:
-> - `!at -users` notifies player you're using the mod
-> - `!at -download` sends a download link to the player
-> - `!at :3` makes the player say "I support trans rights!! :3"
 
 ![image](https://github.com/epicgamerjamer/Against_Toxicity/assets/101027811/0c086bd7-32aa-4d81-8f5f-487e8ec0e1a4)
 ![image](https://github.com/epicgamerjamer/Against_Toxicity/assets/101027811/73da4f12-ad3a-4330-bf25-57f8df719683)
