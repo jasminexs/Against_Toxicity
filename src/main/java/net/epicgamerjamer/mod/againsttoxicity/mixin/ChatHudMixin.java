@@ -20,13 +20,16 @@ public class ChatHudMixin {
     public void onGameMessage(Text m, CallbackInfo ci) {
         if (AutoConfig.getConfigHolder(Config.class).getConfig().modEnabled) {
             String message = m.getString().replaceAll("§.","");
-            String name = NameHelper.getUsername(message);
-            message = message.toLowerCase();
-            if (name != null) {
-                message = message
-                        .replaceAll("[^a-zA-Z0-9_:<>()\\[\\]\\- ]", "")
-                        .substring(message.indexOf(name.toLowerCase()) + name.length() + 1).trim() + " ";
-                if (message.contains(" was blown up by ") || message.contains(" was slain by ")) message = message.substring(message.indexOf(name) + name.length());
+            String name = NameHelper.getUsername(message.replaceAll("[^a-zA-Z0-9_:<>()\\[\\]\\- ]", ""));
+            if (name != null && !name.isEmpty()) {
+                System.out.println("1 " + message);
+                message = message.substring(message.indexOf(name) + name.length() + 1);
+                message = message.toLowerCase()
+                        .replaceAll("[^a-z0-9_ ]", "")
+                        .trim() + " ";
+                        System.out.println("2 " + message);
+                if (message.contains(" was blown up by ") || message.contains(" was slain by "))
+                    message = message.substring(message.indexOf(name) + name.length());
 
                 ChatProcessor processor = new ChatProcessor(message);
                 int toxicity = processor.getToxicity();
@@ -35,7 +38,7 @@ public class ChatHudMixin {
                 ClientPlayNetworkHandler handler = MinecraftClient.getInstance().player.networkHandler;
 
                 if (toxicity > 0) {
-                    String response = new TextBuilder(name, toxicity).toString();
+                    String response = new TextBuilder(name, toxicity).getString();
                     if (isPrivate) handler.sendChatCommand(("msg " + name + " " + response));
                     else handler.sendChatMessage(response);
                 }
