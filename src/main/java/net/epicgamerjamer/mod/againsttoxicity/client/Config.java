@@ -8,15 +8,11 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 public class Config implements ConfigData {
     public boolean modEnabled = true;
     public boolean privateDefault = false;
-
-    @ConfigEntry.Gui.Tooltip
-    public boolean removeLetterSpam = true;
-
     @ConfigEntry.Gui.CollapsibleObject
-    ServersDropdown servers = new ServersDropdown();
-    public static class ServersDropdown {
+    Lists lists = new Lists();
+    public static class Lists {
+        public String[] friends = {};
         public String[] privateServers = {};
         public String[] publicServers = {};
     }
-    public String[] friends = {};
 }
