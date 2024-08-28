@@ -11,15 +11,15 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ChatScreen.class)
 public class ChatScreenMixin {
     @Unique
     private static Config config = AutoConfig.getConfigHolder(Config.class).getConfig();
 
-    @Inject(method = "sendMessage", at = @At("HEAD"), cancellable = true)
-    public void onSendMessage(String chatText, boolean addToHistory, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "sendMessage(Ljava/lang/String;Z)V", at = @At("HEAD"), cancellable = true)
+    public void onSendMessage(String chatText, boolean addToHistory, CallbackInfo ci) {
         if (config.modEnabled && new ChatProcessor(chatText.toLowerCase()).getToxicity() > 0 && (
                 chatText.startsWith("/r ") ||
                 chatText.startsWith("/msg ") ||
@@ -30,7 +30,7 @@ public class ChatScreenMixin {
             MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(
                     Text.literal("Try rewriting that to be less toxic.").formatted(Formatting.GRAY)
             );
-            cir.setReturnValue(false);
+            ci.cancel();
         }
     }
 }
